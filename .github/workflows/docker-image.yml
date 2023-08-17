@@ -16,14 +16,15 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Login to docker-hub
-      run:  docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_ACCESS_TOKEN }}
+      run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_ACCESS_TOKEN }}
     
     - name: Build docker-image
       run: docker build -t galinko/todolist-flask:latest .
     
     - name: Tag docker-image
-      run: docker tag $(docker images -aq | head -n1) ${{ secrets.DOCKER_USERNAME }} /todolist-flask:latest
+      run: docker tag $(docker images -aq | head -n1) ${{ secrets.DOCKER_USERNAME }}/todolist-flask:latest
       
     - name: Push to registry
-      run: docker push galinko/todolist-flask:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/todolist-flask:latest
+
     
